@@ -29,18 +29,21 @@ let quizData = [
 
 ];
   
-
+//dynamically generates questions
+    //clears the previous content
   function generateQuiz() {
-    const quizContainer = document.getElementById('quiz-container');
+    let quizContainer = document.getElementById('quiz-container');
     quizContainer.innerHTML = ''; 
-  
+    
+    //creates div for each question and retrieves data from questionData object
     quizData.forEach((questionData, index) => {
-      const questionDiv = document.createElement('div');
+      let questionDiv = document.createElement('div');
       questionDiv.classList.add('question');
       questionDiv.innerHTML = `<p>${index + 1}. ${questionData.question}</p>`;
-  
+        
+      //creates options. 
       questionData.options.forEach(option => {
-        const optionDiv = document.createElement('div');
+        let optionDiv = document.createElement('div');
         optionDiv.classList.add('option');
         optionDiv.innerHTML = `<label><input type="radio" name="question${index}" value="${option}">${option}</label>`;
         questionDiv.appendChild(optionDiv);
@@ -51,24 +54,24 @@ let quizData = [
   }
   
 
-  // Function to calculate and display quiz result with highlighting
+    //shows final results 
     function showResult() {
-    const resultDiv = document.getElementById('result');
-    const answerInputs = document.querySelectorAll('input[type="radio"]:checked');
+    let resultDiv = document.getElementById('result');
+    let answerInputs = document.querySelectorAll('input[type="radio"]:checked');
     let score = 0;
   
     answerInputs.forEach(input => {
-      const questionIndex = parseInt(input.name.replace('question', ''));
-      const selectedAnswer = input.value;
-      const correctAnswer = quizData[questionIndex].correctAnswer;
+      let questionIndex = parseInt(input.name.replace('question', ''));
+      let selectedAnswer = input.value;
+      let correctAnswer = quizData[questionIndex].correctAnswer;
   
-      // Highlight correct and incorrect answers
-      const parentDiv = input.closest('.question');
+      //checks if answer is right. If yes, increments score and higlight with green
+      let parentDiv = input.closest('.question');
       if (selectedAnswer === correctAnswer) {
-        parentDiv.style.backgroundColor = 'rgba(0, 255, 0, 0.2)'; // Greenish color for correct answer
+        parentDiv.style.backgroundColor = 'rgba(0, 255, 0, 0.2)'; // green color for correct answer
         score++;
       } else {
-        parentDiv.style.backgroundColor = 'rgba(255, 0, 0, 0.2)'; // Reddish color for incorrect answer
+        parentDiv.style.backgroundColor = 'rgba(255, 0, 0, 0.2)'; // red color for incorrect answer
       }
     });
   
